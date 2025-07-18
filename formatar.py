@@ -2,6 +2,9 @@ import pandas as pd
 import os
 import glob
 from IPython.display import display
+from openpyxl import load_workbook
+from openpyxl.styles import numbers
+from pandas import ExcelWriter
 
 #============================================================================================================================================================
 # CRIAÇÃO DA PASTA PARA COLOCAR O ARQUIVO ===================================================================================================================
@@ -284,6 +287,25 @@ print('COLUNAS TABELA ==========================================================
 print(vendas_df.columns)
 
 # TRANSFORMA EM UM ARQUIVO NOVO NA PASTA DA AUTOMACAO ==========================================================================================================
-vendas_df.to_excel(os.path.join(caminho_base, "Pedidos.xlsx"), index=False)
+arquivo_final = os.path.join(caminho_base, "Pedidos.xlsx")
+
+# Salva com o ExcelWriter para aplicar formatações
+with ExcelWriter(arquivo_final, engine='openpyxl') as writer:
+    vendas_df.to_excel(writer, index=False, sheet_name='Planilha')
+
+    # Pega a planilha ativa
+    ws = writer.book['Planilha']
+
+    # Lista de colunas que devem ser formatadas como contábil
+    colunas_formatar = ['Taxa total cobrada', 'Taxa extra cobrada', 'Taxa de Entrega', 
+                        'Taxa total entregador', 'Taxa extra entregador', 'Taxa de entrega entregador']
+
+    # Aplica formatação contábil (estilo brasileiro) nessas colunas
+    for col in colunas_formatar:
+        if col in vendas_df.columns:
+            idx = vendas_df.columns.get_loc(col) + 1  # 1-based index pro Excel
+            for row in ws.iter_rows(min_row=2, min_col=idx, max_col=idx):  # pula o cabeçalho
+                for cell in row:
+                    cell.number_format = '#,##0.00'
 
 print(print('✅ Formatação e Padronização concluídas com sucesso.'))

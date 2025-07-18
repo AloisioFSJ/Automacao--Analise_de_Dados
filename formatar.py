@@ -1,10 +1,8 @@
 import pandas as pd
 import os
-import xlrd
 import glob
-import time
 from IPython.display import display
-from datetime import timedelta
+
 #============================================================================================================================================================
 # CRIAÇÃO DA PASTA PARA COLOCAR O ARQUIVO ===================================================================================================================
 # AJUSTA O CAMINHO DO ARQUIVO A DEPENDER SE FOR '.py.' OU '.exe'

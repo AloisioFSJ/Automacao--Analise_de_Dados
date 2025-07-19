@@ -66,9 +66,7 @@ vendas_df['Origem'] = vendas_df['Origem'].fillna('PRÓPRIO')
 
 # CLASSIFICACAO
 # IF PARA DEFINIR A CLASSIFICACAO DA DISTANCIA POR ROTA =======================================================================================================
-vendas_df['Distancia por rota (Km)'] = (
-    vendas_df['Distancia por rota (Km)'].astype(str).str.replace(',', '.', regex=False)
-)
+vendas_df['Distancia por rota (Km)'] = (vendas_df['Distancia por rota (Km)'].astype(str).str.replace(',', '.', regex=False))
 vendas_df['Distancia por rota (Km)'] = pd.to_numeric(vendas_df['Distancia por rota (Km)'], errors='coerce')
 col_distancia_rota = vendas_df.columns.get_loc('Distancia por rota (Km)')
 
@@ -239,12 +237,12 @@ vendas_df.insert(col_hora_finalizacao + 1, 'Média de entrega', '')
 # PERIODO
 # CRIAR A COLUNA 'periodo' VAZIA PARA TER A FORMULA DA PLANILHA APLICADA ===============================================================================
 col_media_entrega = vendas_df.columns.get_loc('Média de entrega')
-vendas_df.insert(col_media_entrega + 1, 'periodo', '')
+vendas_df.insert(col_media_entrega + 1, 'Período', '')
 
 # OPERACAO
 # CRIAR A COLUNA 'operacao' VAZIA PARA TER A FORMULA DA PLANILHA APLICADA ===============================================================================
-col_periodo = vendas_df.columns.get_loc('periodo')
-vendas_df.insert(col_periodo + 1, 'operação', '')
+col_periodo = vendas_df.columns.get_loc('Período')
+vendas_df.insert(col_periodo + 1, 'Operação', '')
 
 # APAGAR COLUNAS NAO UTILIZADAS ================================================================================================================================
 vendas_df = vendas_df.drop('Situação', axis=1)
@@ -285,6 +283,8 @@ print('PLANILHA INTEIRA ========================================================
 display(vendas_df)
 print('COLUNAS TABELA ============================================================')
 print(vendas_df.columns)
+print('COLUNAS ESPECÍFICAS =======================================================')
+display(vendas_df[['Média de entrega', 'Período', 'Hora do cadastro', 'Operação']])
 
 # TRANSFORMA EM UM ARQUIVO NOVO NA PASTA DA AUTOMACAO ==========================================================================================================
 arquivo_final = os.path.join(caminho_base, "Pedidos.xlsx")
@@ -306,6 +306,6 @@ with ExcelWriter(arquivo_final, engine='openpyxl') as writer:
             idx = vendas_df.columns.get_loc(col) + 1  # 1-based index pro Excel
             for row in ws.iter_rows(min_row=2, min_col=idx, max_col=idx):  # pula o cabeçalho
                 for cell in row:
-                    cell.number_format = '#,##0.00'
+                    cell.number_format = 'R$ #,##0.00'
 
 print(print('✅ Formatação e Padronização concluídas com sucesso.'))

@@ -309,3 +309,8 @@ with ExcelWriter(arquivo_final, engine='openpyxl') as writer:
                     cell.number_format = 'R$ #,##0.00'
 
 print(print('✅ Formatação e Padronização concluídas com sucesso.'))
+
+# Desenvolvido por Aloísio
+# GitHub: github.com/AloisioFSJ
+# Data: 21/07/2025
+# Powered by café e Python 🐍☕

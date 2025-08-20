@@ -24,8 +24,8 @@ caminho_pasta = os.path.join(caminho_base, pasta_destino)
 # 🔍 Verifica se a pasta existe =============================================================================================================================
 if not os.path.exists(caminho_pasta):
     os.makedirs(caminho_pasta)
-    print(f'📂 Pasta "{pasta_destino}" criada com sucesso.')
-    print(f'⚠️ Coloque o arquivo .xls na pasta "{pasta_destino}" e execute o script novamente.')
+    print(f'📂  Pasta "{pasta_destino}" criada com sucesso.')
+    print(f'⚠️  Coloque o arquivo .xls na pasta "{pasta_destino}" e execute o script novamente.')
     input('Pressione "Enter" para finalizar ')
     exit()
 
@@ -37,8 +37,8 @@ print(f'📍 Caminho completo verificado: {caminho_pasta}')
 
 # ❌ Se não encontrar nenhum, avisa e para o script =========================================================================================================
 if not arquivos_excel:
-    print(f'⚠️ Nenhum arquivo Excel encontrado na pasta "{pasta_destino}".')
-    print(f'➡️ Por favor, coloque o arquivo desejado na pasta e rode novamente.')
+    print(f'⚠️  Nenhum arquivo Excel encontrado na pasta "{pasta_destino}".')
+    print(f'➡️  Por favor, coloque o arquivo desejado na pasta e rode novamente.')
     input('Pressione "Enter" para finalizar ')
     exit()
 
@@ -50,9 +50,9 @@ print(f'✅ Arquivo encontrado: {os.path.basename(arquivo)}')
 # 📊 Leitura do arquivo com pandas ===========================================================================================================================
 try:
     vendas_df = pd.read_excel(arquivo)
-    print('✅ Arquivo carregado com sucesso.')
+    print('✅  Arquivo carregado com sucesso.')
 except Exception as e:
-    print(f'❌ Erro ao ler o arquivo: {e}')
+    print(f'❌  Erro ao ler o arquivo: {e}')
     exit()
 
 # LEITURA DO ARQUIVO EM '.xls' E PORTE DELE PARA '.xlsx' =====================================================================================================
@@ -308,4 +308,4 @@ with ExcelWriter(arquivo_final, engine='openpyxl') as writer:
                 for cell in row:
                     cell.number_format = 'R$ #,##0.00'
 
-print(print('✅ Formatação e Padronização concluídas com sucesso.'))
+print(print('✅  Formatação e Padronização concluídas com sucesso.'))
